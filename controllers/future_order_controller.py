@@ -33,10 +33,3 @@ def place_future_order(symbol, side, order_type, quantity, price, working_type):
     response = requests.post(constants.REST_BASE_URL + '/fapi/v1/order', payload, headers=headers)
 
     return response.json()
-
-
-# result = get_position_by_symbol('ETHUSDT')
-# print(result)
-#
-# result2 = place_future_order('BTCUSDT', 'BUY', 'LIMIT', 5, 23456.67, 'MARK_PRICE')
-# print(result2)
