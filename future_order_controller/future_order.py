@@ -10,8 +10,6 @@ def get_position_by_symbol(symbol):
     headers = {'Content-Type': 'application/json', 'X-MBX-APIKEY': constants.API_KEY}
     query = {'symbol': symbol, 'timestamp': time_utils.get_current_timestamp()}
 
-    print(urllib.parse.urlencode(query))
-
     signature = {'signature': signature_utils.create_signature(urllib.parse.urlencode(query))}
 
     payload = dict(query)
@@ -37,8 +35,8 @@ def place_future_order(symbol, side, order_type, quantity, price, working_type):
     return response.json()
 
 
-result = get_position_by_symbol('ETHUSDT')
-print(result)
-
-result2 = place_future_order('BTCUSDT', 'BUY', 'LIMIT', 5, 23456.67, 'MARK_PRICE')
-print(result2)
+# result = get_position_by_symbol('ETHUSDT')
+# print(result)
+#
+# result2 = place_future_order('BTCUSDT', 'BUY', 'LIMIT', 5, 23456.67, 'MARK_PRICE')
+# print(result2)

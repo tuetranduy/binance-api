@@ -139,4 +139,4 @@ cython_debug/
 {"mode":"full","isActive":false}
 
 # env file
-*.env
+#*.env
