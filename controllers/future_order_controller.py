@@ -1,19 +1,14 @@
-import urllib
-
 import requests
 
 from constants import constants
-from utils import time_utils, signature_utils
+from utils import param_builder
 
 
 def get_all_opened_positions_by_symbol(symbol):
     headers = {'Content-Type': 'application/json', 'X-MBX-APIKEY': constants.API_KEY}
-    query = {'symbol': symbol, 'timestamp': time_utils.get_current_timestamp()}
+    query = {'symbol': symbol}
 
-    signature = {'signature': signature_utils.create_signature(urllib.parse.urlencode(query))}
-
-    payload = dict(query)
-    payload.update(signature)
+    payload = param_builder.create_params_with_signature(query)
 
     response = requests.get(constants.REST_BASE_URL + '/fapi/v2/positionRisk', payload, headers=headers)
 
@@ -29,13 +24,10 @@ def place_order(request):
     working_type = request.form['workingType']
 
     headers = {'Content-Type': 'application/x-www-form-urlencoded', 'X-MBX-APIKEY': constants.API_KEY}
-    query = {'symbol': symbol, 'side': side, 'type': order_type, 'timeInForce': 'GTC', 'quantity': quantity,
-             'price': price,
-             'workingType': working_type, 'timestamp': time_utils.get_current_timestamp()}
-    signature = {'signature': signature_utils.create_signature(urllib.parse.urlencode(query))}
+    query = {'symbol': symbol, 'side': side, 'type': order_type, 'quantity': quantity, 'price': price,
+             'workingType': working_type}
 
-    payload = dict(query)
-    payload.update(signature)
+    payload = param_builder.create_params_with_signature(query)
 
     response = requests.post(constants.REST_BASE_URL + '/fapi/v1/order', payload, headers=headers)
 
@@ -52,13 +44,10 @@ def place_hedge_order(request):
     working_type = request.form['workingType']
 
     headers = {'Content-Type': 'application/x-www-form-urlencoded', 'X-MBX-APIKEY': constants.API_KEY}
-    query = {'symbol': symbol, 'side': side, 'positionSide': position_side, 'type': order_type, 'timeInForce': 'GTC',
-             'quantity': quantity, 'price': price, 'workingType': working_type,
-             'timestamp': time_utils.get_current_timestamp()}
-    signature = {'signature': signature_utils.create_signature(urllib.parse.urlencode(query))}
+    query = {'symbol': symbol, 'side': side, 'positionSide': position_side, 'type': order_type, 'quantity': quantity,
+             'price': price, 'workingType': working_type}
 
-    payload = dict(query)
-    payload.update(signature)
+    payload = param_builder.create_params_with_signature(query)
 
     response = requests.post(constants.REST_BASE_URL + '/fapi/v1/order', payload, headers=headers)
 
@@ -70,12 +59,9 @@ def cancel_order(request):
     order_id = request.form['orderId']
 
     headers = {'Content-Type': 'application/x-www-form-urlencoded', 'X-MBX-APIKEY': constants.API_KEY}
-    query = {'symbol': symbol, 'timeInForce': 'GTC', 'orderId': order_id,
-             'timestamp': time_utils.get_current_timestamp()}
-    signature = {'signature': signature_utils.create_signature(urllib.parse.urlencode(query))}
+    query = {'symbol': symbol, 'orderId': order_id}
 
-    payload = dict(query)
-    payload.update(signature)
+    payload = param_builder.create_params_with_signature(query)
 
     response = requests.delete(constants.REST_BASE_URL + '/fapi/v1/order', data=payload, headers=headers)
 
@@ -86,11 +72,9 @@ def cancel_all_opened_orders(request):
     symbol = request.form['symbol']
 
     headers = {'Content-Type': 'application/x-www-form-urlencoded', 'X-MBX-APIKEY': constants.API_KEY}
-    query = {'symbol': symbol, 'timeInForce': 'GTC', 'timestamp': time_utils.get_current_timestamp()}
-    signature = {'signature': signature_utils.create_signature(urllib.parse.urlencode(query))}
+    query = {'symbol': symbol}
 
-    payload = dict(query)
-    payload.update(signature)
+    payload = param_builder.create_params_with_signature(query)
 
     response = requests.delete(constants.REST_BASE_URL + '/fapi/v1/allOpenOrders', data=payload, headers=headers)
 
@@ -102,12 +86,9 @@ def cancel_multiple_orders(request):
     order_id_list = request.form['orderIdList']
 
     headers = {'Content-Type': 'application/x-www-form-urlencoded', 'X-MBX-APIKEY': constants.API_KEY}
-    query = {'symbol': symbol, 'orderIdList': order_id_list, 'timeInForce': 'GTC',
-             'timestamp': time_utils.get_current_timestamp()}
-    signature = {'signature': signature_utils.create_signature(urllib.parse.urlencode(query))}
+    query = {'symbol': symbol, 'orderIdList': order_id_list}
 
-    payload = dict(query)
-    payload.update(signature)
+    payload = param_builder.create_params_with_signature(query)
 
     response = requests.delete(constants.REST_BASE_URL + '/fapi/v1/batchOrders', data=payload, headers=headers)
 
