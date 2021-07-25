@@ -57,3 +57,12 @@ def cancel_multiple_orders():
     return {
         'data': response
     }
+
+
+@app.post("/closePositionForOneWayOrder")
+def close_position_for_normal_order():
+    response = future_order_controller.close_position_for_normal_order(request)
+
+    return {
+        'data': response
+    }
