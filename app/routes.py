@@ -1,12 +1,12 @@
 from flask import request
 
 from app.server import app
-from controllers import future_order_controller
+from controllers import future_controller
 
 
 @app.get("/getPositions/<position>")
 def get_position(position):
-    response = future_order_controller.get_all_opened_positions_by_symbol(position)
+    response = future_controller.get_all_opened_positions_by_symbol(position)
 
     return {
         'data': response
@@ -15,7 +15,7 @@ def get_position(position):
 
 @app.post("/placeOneWayOrder")
 def place_one_way_order():
-    response = future_order_controller.place_order(request)
+    response = future_controller.place_order(request)
 
     return {
         'data': response
@@ -24,7 +24,7 @@ def place_one_way_order():
 
 @app.post("/placeHedgeOrder")
 def place_hedge_order():
-    response = future_order_controller.place_hedge_order(request)
+    response = future_controller.place_hedge_order(request)
 
     return {
         'data': response
@@ -33,7 +33,7 @@ def place_hedge_order():
 
 @app.delete("/cancelOrder")
 def cancel_order():
-    response = future_order_controller.cancel_order(request)
+    response = future_controller.cancel_order(request)
 
     return {
         'data': response
@@ -42,7 +42,7 @@ def cancel_order():
 
 @app.delete("/cancelAllOrders")
 def cancel_all_opened_orders():
-    response = future_order_controller.cancel_all_opened_orders(request)
+    response = future_controller.cancel_all_opened_orders(request)
 
     return {
         'data': response
@@ -51,7 +51,7 @@ def cancel_all_opened_orders():
 
 @app.delete("/cancelMultipleOrders")
 def cancel_multiple_orders():
-    response = future_order_controller.cancel_multiple_orders(request)
+    response = future_controller.cancel_multiple_orders(request)
 
     return {
         'data': response
@@ -60,7 +60,7 @@ def cancel_multiple_orders():
 
 @app.post("/closePositionForOneWayOrder")
 def close_position_for_normal_order():
-    response = future_order_controller.close_position_for_normal_order(request)
+    response = future_controller.close_position_for_normal_order(request)
 
     return {
         'data': response
@@ -69,7 +69,7 @@ def close_position_for_normal_order():
 
 @app.post("/batchPositionForOneWayOrder")
 def batch_close_position_for_normal_order():
-    response = future_order_controller.batch_close_position_for_normal_order(request)
+    response = future_controller.batch_close_position_for_normal_order(request)
 
     return {
         'data': response
@@ -78,7 +78,16 @@ def batch_close_position_for_normal_order():
 
 @app.get("/order")
 def get_order():
-    response = future_order_controller.get_order(request)
+    response = future_controller.get_order(request)
+
+    return {
+        'data': response
+    }
+
+
+@app.get("/futureBalance")
+def get_future_balance():
+    response = future_controller.get_balance()
 
     return {
         'data': response

@@ -12,12 +12,6 @@ def get_all_opened_positions_by_symbol(symbol):
 
     responses = requests.get(constants.REST_BASE_URL + '/fapi/v2/positionRisk', payload, headers=headers).json()
 
-    # TODO: added as Thanh's request, remove if unused
-    for response in responses:
-        if 'code' and 'msg' not in responses:
-            response['code'] = 200
-            response['msg'] = "Success"
-
     return responses
 
 
@@ -157,5 +151,15 @@ def get_order(request):
     payload = param_builder.create_params_with_signature(query)
 
     response = requests.get(constants.REST_BASE_URL + '/fapi/v1/order', payload, headers=headers).json()
+
+    return response
+
+
+def get_balance():
+    headers = {'Content-Type': 'application/x-www-form-urlencoded', 'X-MBX-APIKEY': constants.API_KEY}
+
+    payload = param_builder.create_params_with_signature(None)
+
+    response = requests.get(constants.REST_BASE_URL + '/fapi/v2/balance', payload, headers=headers).json()
 
     return response
