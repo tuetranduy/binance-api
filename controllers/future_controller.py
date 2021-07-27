@@ -63,9 +63,11 @@ def place_hedge_order(request):
 
     payload = param_builder.create_params_with_signature(query)
 
-    print(f"Requested payload: {payload}")
+    print(f"place_hedge_order_Requested payload: {payload}")
 
-    response = requests.post(constants.REST_BASE_URL + '/fapi/v1/order', payload, headers=headers)
+    response = requests.post(constants.REST_BASE_URL + '/fapi/v1/order', payload, headers=headers).json()
+
+    print(f"place_hedge_order_Response: {response}")
 
     return response.json()
 
