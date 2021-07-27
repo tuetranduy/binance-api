@@ -29,6 +29,8 @@ def place_order(request):
 
     payload = param_builder.create_params_with_signature(query)
 
+    print(f"Requested payload: {payload}")
+
     response = requests.post(constants.REST_BASE_URL + '/fapi/v1/order', payload, headers=headers)
 
     return response.json()
@@ -60,6 +62,8 @@ def place_hedge_order(request):
     headers = {'Content-Type': 'application/x-www-form-urlencoded', 'X-MBX-APIKEY': constants.API_KEY}
 
     payload = param_builder.create_params_with_signature(query)
+
+    print(f"Requested payload: {payload}")
 
     response = requests.post(constants.REST_BASE_URL + '/fapi/v1/order', payload, headers=headers)
 
