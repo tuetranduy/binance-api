@@ -37,6 +37,8 @@ def place_order(request):
 
 
 def place_hedge_order(request):
+    print(f"very first request: {request}")
+
     query = {}
     order_type = request.form['orderType']
 
