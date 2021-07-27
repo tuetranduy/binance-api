@@ -35,17 +35,30 @@ def place_order(request):
 
 
 def place_hedge_order(request):
-    symbol = request.form['symbol']
-    side = request.form['side']
-    position_side = request.form['positionSide']
+    query = {}
     order_type = request.form['orderType']
-    quantity = request.form['quantity']
-    price = request.form['price']
-    working_type = request.form['workingType']
+
+    if order_type == 'LIMIT':
+        symbol = request.form['symbol']
+        side = request.form['side']
+        position_side = request.form['positionSide']
+        quantity = request.form['quantity']
+        price = request.form['price']
+
+        query = {'symbol': symbol, 'side': side, 'positionSide': position_side, 'type': order_type,
+                 'quantity': quantity, 'price': price, 'timeInForce': 'GTC'}
+
+    elif order_type == "MARKET":
+        symbol = request.form['symbol']
+        side = request.form['side']
+        position_side = request.form['positionSide']
+        quantity = request.form['quantity']
+        working_type = request.form['workingType']
+
+        query = {'symbol': symbol, 'side': side, 'positionSide': position_side, 'type': order_type,
+                 'quantity': quantity, 'workingType': working_type}
 
     headers = {'Content-Type': 'application/x-www-form-urlencoded', 'X-MBX-APIKEY': constants.API_KEY}
-    query = {'symbol': symbol, 'side': side, 'positionSide': position_side, 'type': order_type, 'quantity': quantity,
-             'price': price, 'workingType': working_type, 'timeInForce': 'GTC'}
 
     payload = param_builder.create_params_with_signature(query)
 
