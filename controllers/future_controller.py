@@ -53,10 +53,9 @@ def place_hedge_order(request):
         side = request.form['side']
         position_side = request.form['positionSide']
         quantity = request.form['quantity']
-        working_type = request.form['workingType']
 
         query = {'symbol': symbol, 'side': side, 'positionSide': position_side, 'type': order_type,
-                 'quantity': quantity, 'workingType': working_type}
+                 'quantity': quantity}
 
     headers = {'Content-Type': 'application/x-www-form-urlencoded', 'X-MBX-APIKEY': constants.API_KEY}
 
