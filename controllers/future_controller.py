@@ -69,7 +69,7 @@ def place_hedge_order(request):
 
     print(f"place_hedge_order_Response: {response}")
 
-    return response.json()
+    return response
 
 
 def cancel_order(request):
