@@ -92,3 +92,21 @@ def get_future_balance():
     return {
         'data': response
     }
+
+
+@app.post("/changePositionMode")
+def change_position_mode():
+    response = future_controller.change_position_mode(request)
+
+    return {
+        'data': response
+    }
+
+
+@app.get("/getPositionMode")
+def get_position_mode():
+    response = future_controller.get_position_mode()
+
+    return {
+        'data': response
+    }

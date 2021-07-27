@@ -163,3 +163,26 @@ def get_balance():
     response = requests.get(constants.REST_BASE_URL + '/fapi/v2/balance', payload, headers=headers).json()
 
     return response
+
+
+def change_position_mode(request):
+    dual_side_position = request.form['dualSidePosition']
+
+    headers = {'Content-Type': 'application/x-www-form-urlencoded', 'X-MBX-APIKEY': constants.API_KEY}
+    query = {'dualSidePosition': dual_side_position}
+
+    payload = param_builder.create_params_with_signature(query)
+
+    response = requests.post(constants.REST_BASE_URL + '/fapi/v1/positionSide/dual', payload, headers=headers).json()
+
+    return response
+
+
+def get_position_mode():
+    headers = {'Content-Type': 'application/x-www-form-urlencoded', 'X-MBX-APIKEY': constants.API_KEY}
+
+    payload = param_builder.create_params_with_signature(None)
+
+    response = requests.get(constants.REST_BASE_URL + '/fapi/v1/positionSide/dual', payload, headers=headers).json()
+
+    return response
