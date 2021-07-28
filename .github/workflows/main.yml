@@ -17,6 +17,8 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    env:
+      FLASK_ENV: production
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -30,9 +32,6 @@ jobs:
 
       - name: Install dependencies
         run: pip install -r requirements.txt
-
-      - name: Setup enviroment variables
-        run: export FLASK_ENV=production
 
       - name: Running unit test
         run: python -m pytest
