@@ -1,5 +1,6 @@
 import requests
 
+from app.server import app
 from constants import constants
 from utils import param_builder
 
@@ -16,6 +17,8 @@ def get_all_opened_positions_by_symbol(symbol):
 
 
 def place_order(request):
+    app.logger.info('place_order_Requested data: %s', request.form)
+
     symbol = request.form['symbol']
     side = request.form['side']
     order_type = request.form['orderType']
@@ -37,7 +40,7 @@ def place_order(request):
 
 
 def place_hedge_order(request):
-    print(f"very first request: {request.form}")
+    app.logger.info('place_hedge_order_Requested data: %s', request.form)
 
     query = {}
     order_type = request.form['orderType']
@@ -65,7 +68,7 @@ def place_hedge_order(request):
 
     payload = param_builder.create_params_with_signature(query)
 
-    print(f"place_hedge_order_Requested payload: {payload}")
+    app.logger.info('place_hedge_order_Requested payload: %s', payload)
 
     response = requests.post(constants.REST_BASE_URL + '/fapi/v1/order', payload, headers=headers).json()
 
@@ -75,6 +78,8 @@ def place_hedge_order(request):
 
 
 def cancel_order(request):
+    app.logger.info('cancel_order_Requested payload: %s', request.form)
+
     symbol = request.form['symbol']
     order_id = request.form['orderId']
 
@@ -89,6 +94,7 @@ def cancel_order(request):
 
 
 def cancel_all_opened_orders(request):
+    app.logger.info('cancel_all_opened_orders_Requested payload: %s', request.form)
     symbol = request.form['symbol']
 
     headers = {'Content-Type': 'application/x-www-form-urlencoded', 'X-MBX-APIKEY': constants.API_KEY}
@@ -102,6 +108,8 @@ def cancel_all_opened_orders(request):
 
 
 def cancel_multiple_orders(request):
+    app.logger.info('cancel_multiple_orders_Requested payload: %s', request.form)
+
     symbol = request.form['symbol']
     order_id_list = request.form['orderIdList']
 
@@ -117,6 +125,8 @@ def cancel_multiple_orders(request):
 
 # Close opened position for One-way order with MARKET_PRICE
 def close_position_for_normal_order(request):
+    app.logger.info('cancel_multiple_orders_Requested payload: %s', request.form)
+
     symbol = request.form['symbol']
     side = request.form['side']
     order_type = 'MARKET'
@@ -135,6 +145,8 @@ def close_position_for_normal_order(request):
 
 # Batch close opened position for One-way order with MARKET_PRICE
 def batch_close_position_for_normal_order(request):
+    app.logger.info('batch_close_position_for_normal_order_Requested payload: %s', request.get_json())
+
     positions = request.get_json()['data']
 
     response = []
@@ -162,6 +174,8 @@ def batch_close_position_for_normal_order(request):
 
 
 def get_order(request):
+    app.logger.info('get_order_Requested payload: %s', request.form)
+
     symbol = request.args.get('symbol')
     order_id = request.args.get('orderId')
 
@@ -209,6 +223,8 @@ def get_position_mode():
 
 
 def set_tp_and_sl(request):
+    app.logger.info('set_tp_and_sl_Requested payload: %s', request.form)
+
     symbol = request.form['symbol']
     side = request.form['side']
     position_side = request.form['positionSide']
