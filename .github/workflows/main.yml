@@ -31,5 +31,8 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Setup enviroment variables
+        run: export FLASK_ENV=production
+
       - name: Running unit test
         run: python -m pytest
