@@ -16,6 +16,7 @@ def get_position(position):
 
     except Exception as e:
         capture_exception(e)
+        return e
 
 
 @app.post("/placeOneWayOrder")
@@ -29,6 +30,7 @@ def place_one_way_order():
 
     except Exception as e:
         capture_exception(e)
+        return e
 
 
 @app.post("/placeHedgeOrder")
@@ -42,6 +44,7 @@ def place_hedge_order():
 
     except Exception as e:
         capture_exception(e)
+        return e
 
 
 @app.delete("/cancelOrder")
@@ -55,6 +58,7 @@ def cancel_order():
 
     except Exception as e:
         capture_exception(e)
+        return e
 
 
 @app.delete("/cancelAllOrders")
@@ -68,6 +72,7 @@ def cancel_all_opened_orders():
 
     except Exception as e:
         capture_exception(e)
+        return e
 
 
 @app.delete("/cancelMultipleOrders")
@@ -81,6 +86,7 @@ def cancel_multiple_orders():
 
     except Exception as e:
         capture_exception(e)
+        return e
 
 
 @app.post("/closePositionForOneWayOrder")
@@ -94,6 +100,7 @@ def close_position_for_normal_order():
 
     except Exception as e:
         capture_exception(e)
+        return e
 
 
 @app.post("/batchPositionForOneWayOrder")
@@ -107,6 +114,7 @@ def batch_close_position_for_normal_order():
 
     except Exception as e:
         capture_exception(e)
+        return e
 
 
 @app.get("/order")
@@ -120,6 +128,7 @@ def get_order():
 
     except Exception as e:
         capture_exception(e)
+        return e
 
 
 @app.get("/futureBalance")
@@ -133,6 +142,7 @@ def get_future_balance():
 
     except Exception as e:
         capture_exception(e)
+        return e
 
 
 @app.post("/changePositionMode")
@@ -146,6 +156,7 @@ def change_position_mode():
 
     except Exception as e:
         capture_exception(e)
+        return e
 
 
 @app.get("/getPositionMode")
@@ -159,3 +170,4 @@ def get_position_mode():
 
     except Exception as e:
         capture_exception(e)
+        return e
