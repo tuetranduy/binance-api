@@ -171,3 +171,17 @@ def get_position_mode():
     except Exception as e:
         capture_exception(e)
         return e
+
+
+@app.post("/setTpAndSlForOpenedPosition")
+def set_tp_and_sl():
+    try:
+        response = future_controller.set_tp_and_sl(request)
+
+        return {
+            'data': response
+        }
+
+    except Exception as e:
+        capture_exception(e)
+        return e

@@ -206,3 +206,23 @@ def get_position_mode():
     response = requests.get(constants.REST_BASE_URL + '/fapi/v1/positionSide/dual', payload, headers=headers).json()
 
     return response
+
+
+def set_tp_and_sl(request):
+    symbol = request.form['symbol']
+    side = request.form['side']
+    position_side = request.form['positionSide']
+    quantity = request.form['quantity']
+    order_type = request.form['orderType']
+    stop_price = request.form['stopPrice']
+    close_position = True
+
+    headers = {'Content-Type': 'application/x-www-form-urlencoded', 'X-MBX-APIKEY': constants.API_KEY}
+    query = {'symbol': symbol, 'side': side, 'positionSide': position_side, 'type': order_type,
+             'quantity': quantity, 'stopPrice': stop_price, 'closePosition': close_position, 'timeInForce': 'GTC'}
+
+    payload = param_builder.create_params_with_signature(query)
+
+    response = requests.post(constants.REST_BASE_URL + '/fapi/v1/order', payload, headers=headers).json()
+
+    return response
