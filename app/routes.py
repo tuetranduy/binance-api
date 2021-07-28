@@ -1,4 +1,5 @@
 from flask import request
+from sentry_sdk import capture_exception
 
 from app.server import app
 from controllers import future_controller
@@ -6,7 +7,10 @@ from controllers import future_controller
 
 @app.get("/getPositions/<position>")
 def get_position(position):
-    response = future_controller.get_all_opened_positions_by_symbol(position)
+    try:
+        response = future_controller.get_all_opened_positions_by_symbol(position)
+    except Exception as e:
+        capture_exception(e)
 
     return {
         'data': response
@@ -15,7 +19,10 @@ def get_position(position):
 
 @app.post("/placeOneWayOrder")
 def place_one_way_order():
-    response = future_controller.place_order(request)
+    try:
+        response = future_controller.place_order(request)
+    except Exception as e:
+        capture_exception(e)
 
     return {
         'data': response
@@ -24,7 +31,10 @@ def place_one_way_order():
 
 @app.post("/placeHedgeOrder")
 def place_hedge_order():
-    response = future_controller.place_hedge_order(request)
+    try:
+        response = future_controller.place_hedge_order(request)
+    except Exception as e:
+        capture_exception(e)
 
     return {
         'data': response
@@ -33,7 +43,10 @@ def place_hedge_order():
 
 @app.delete("/cancelOrder")
 def cancel_order():
-    response = future_controller.cancel_order(request)
+    try:
+        response = future_controller.cancel_order(request)
+    except Exception as e:
+        capture_exception(e)
 
     return {
         'data': response
@@ -42,7 +55,10 @@ def cancel_order():
 
 @app.delete("/cancelAllOrders")
 def cancel_all_opened_orders():
-    response = future_controller.cancel_all_opened_orders(request)
+    try:
+        response = future_controller.cancel_all_opened_orders(request)
+    except Exception as e:
+        capture_exception(e)
 
     return {
         'data': response
@@ -51,7 +67,10 @@ def cancel_all_opened_orders():
 
 @app.delete("/cancelMultipleOrders")
 def cancel_multiple_orders():
-    response = future_controller.cancel_multiple_orders(request)
+    try:
+        response = future_controller.cancel_multiple_orders(request)
+    except Exception as e:
+        capture_exception(e)
 
     return {
         'data': response
@@ -60,7 +79,10 @@ def cancel_multiple_orders():
 
 @app.post("/closePositionForOneWayOrder")
 def close_position_for_normal_order():
-    response = future_controller.close_position_for_normal_order(request)
+    try:
+        response = future_controller.close_position_for_normal_order(request)
+    except Exception as e:
+        capture_exception(e)
 
     return {
         'data': response
@@ -69,7 +91,10 @@ def close_position_for_normal_order():
 
 @app.post("/batchPositionForOneWayOrder")
 def batch_close_position_for_normal_order():
-    response = future_controller.batch_close_position_for_normal_order(request)
+    try:
+        response = future_controller.batch_close_position_for_normal_order(request)
+    except Exception as e:
+        capture_exception(e)
 
     return {
         'data': response
@@ -78,7 +103,10 @@ def batch_close_position_for_normal_order():
 
 @app.get("/order")
 def get_order():
-    response = future_controller.get_order(request)
+    try:
+        response = future_controller.get_order(request)
+    except Exception as e:
+        capture_exception(e)
 
     return {
         'data': response
@@ -87,7 +115,10 @@ def get_order():
 
 @app.get("/futureBalance")
 def get_future_balance():
-    response = future_controller.get_balance()
+    try:
+        response = future_controller.get_balance()
+    except Exception as e:
+        capture_exception(e)
 
     return {
         'data': response
@@ -96,7 +127,10 @@ def get_future_balance():
 
 @app.post("/changePositionMode")
 def change_position_mode():
-    response = future_controller.change_position_mode(request)
+    try:
+        response = future_controller.change_position_mode(request)
+    except Exception as e:
+        capture_exception(e)
 
     return {
         'data': response
@@ -105,7 +139,10 @@ def change_position_mode():
 
 @app.get("/getPositionMode")
 def get_position_mode():
-    response = future_controller.get_position_mode()
+    try:
+        response = future_controller.get_position_mode()
+    except Exception as e:
+        capture_exception(e)
 
     return {
         'data': response
