@@ -64,6 +64,17 @@ def place_hedge_order(request):
         query = {'symbol': symbol, 'side': side, 'positionSide': position_side, 'type': order_type,
                  'quantity': quantity}
 
+    elif order_type == 'STOP':
+        symbol = request.form['symbol']
+        side = request.form['side']
+        position_side = request.form['positionSide']
+        quantity = request.form['quantity']
+        price = request.form['price']
+        stop_price = request.form['stopPrice']
+
+        query = {'symbol': symbol, 'side': side, 'positionSide': position_side, 'type': order_type,
+                 'quantity': quantity, 'price': price, 'stopPrice': stop_price, 'timeInForce': 'GTC'}
+
     headers = {'Content-Type': 'application/x-www-form-urlencoded', 'X-MBX-APIKEY': constants.API_KEY}
 
     payload = param_builder.create_params_with_signature(query)
