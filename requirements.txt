@@ -30,3 +30,4 @@ wcwidth==0.2.5
 Werkzeug==2.0.1
 requests==2.26.0
 pytest==6.2.4
+python-binance==1.0.12
