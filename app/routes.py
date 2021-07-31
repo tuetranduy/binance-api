@@ -51,3 +51,17 @@ def close_position_for_hedge_order():
     response = future_controller.close_position_for_hedge_order(request)
 
     return response
+
+
+@app.post("/batchPositionForOneWayOrder")
+def batch_close_position_for_normal_order():
+    response = future_controller.batch_close_position_for_normal_order(request)
+
+    return response
+
+
+@app.get("/order")
+def get_order():
+    response = future_controller.get_order(request)
+
+    return response

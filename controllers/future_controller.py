@@ -149,7 +149,7 @@ def close_position_for_normal_order(request):
     quantity = request.form['quantity']
 
     try:
-        result = client.futures_create_order(symbol=symbol, side=side, orderType=order_type, quantity=quantity)
+        result = client.futures_create_order(symbol=symbol, side=side, type=order_type, quantity=quantity)
 
         return {
             'data': result
@@ -173,11 +173,64 @@ def close_position_for_hedge_order(request):
     quantity = request.form['quantity']
 
     try:
-        result = client.futures_create_order(symbol=symbol, side=side, orderType=order_type, quantity=quantity,
+        result = client.futures_create_order(symbol=symbol, side=side, type=order_type, quantity=quantity,
                                              positionSide=position_side)
 
         return {
             'data': result
+        }
+
+    except BinanceAPIException as e:
+        return {
+                   'message': e.message,
+                   'code': e.status_code
+               }, e.status_code
+
+
+# Batch close opened position for One-way order with MARKET_PRICE
+def batch_close_position_for_normal_order(request):
+    app.logger.debug('batch_close_position_for_normal_order_Requested payload: %s', request.get_json())
+
+    positions = request.get_json()['data']
+
+    response = []
+
+    try:
+        for position in positions:
+            symbol = position['symbol']
+            side = position['side']
+            order_type = 'MARKET'
+            quantity = position['quantity']
+
+            result = client.futures_create_order(symbol=symbol, side=side, type=order_type, quantity=quantity)
+
+            if 'code' in result:
+                result['symbol'] = symbol
+
+            response.append(result)
+
+        return {
+            'data': response
+        }
+
+    except BinanceAPIException as e:
+        return {
+                   'message': e.message,
+                   'code': e.status_code
+               }, e.status_code
+
+
+def get_order(request):
+    app.logger.debug('get_order_Requested payload: %s', request.form)
+
+    symbol = request.args.get('symbol')
+    order_id = request.args.get('orderId')
+
+    try:
+        response = client.futures_get_order(symbol=symbol, orderId=order_id)
+
+        return {
+            'data': response
         }
 
     except BinanceAPIException as e:

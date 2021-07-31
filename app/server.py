@@ -20,6 +20,6 @@ sentry_sdk.init(
 
 app = Flask(__name__, instance_relative_config=True)
 
-app.logger.setLevel(logging.INFO)
+app.logger.setLevel(logging.DEBUG)
 
 from app import routes  # type: ignore
