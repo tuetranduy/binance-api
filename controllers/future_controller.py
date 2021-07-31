@@ -238,3 +238,44 @@ def get_order(request):
                    'message': e.message,
                    'code': e.status_code
                }, e.status_code
+
+
+def get_balance():
+    try:
+        response = client.futures_account_balance()
+
+        return {
+            'data': response
+        }
+
+    except BinanceAPIException as e:
+        return {
+                   'message': e.message,
+                   'code': e.status_code
+               }, e.status_code
+
+
+def set_tp_and_sl(request):
+    app.logger.debug('set_tp_and_sl_Requested payload: %s', request.form)
+
+    symbol = request.form['symbol']
+    side = request.form['side']
+    position_side = request.form['positionSide']
+    quantity = request.form['quantity']
+    order_type = request.form['orderType']
+    stop_price = request.form['stopPrice']
+    close_position = True
+
+    try:
+        response = client.futures_create_order(symbol=symbol, side=side, positionSide=position_side, quantity=quantity,
+                                               type=order_type, stopPrice=stop_price, closePosition=close_position)
+
+        return {
+            'data': response
+        }
+
+    except BinanceAPIException as e:
+        return {
+                   'message': e.message,
+                   'code': e.status_code
+               }, e.status_code

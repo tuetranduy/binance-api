@@ -65,3 +65,17 @@ def get_order():
     response = future_controller.get_order(request)
 
     return response
+
+
+@app.get("/futureBalance")
+def get_future_balance():
+    response = future_controller.get_balance()
+
+    return response
+
+
+@app.post("/setTpAndSlForOpenedPosition")
+def set_tp_and_sl():
+    response = future_controller.set_tp_and_sl(request)
+
+    return response
