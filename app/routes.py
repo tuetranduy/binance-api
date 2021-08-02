@@ -1,7 +1,7 @@
 from flask import request
 
 from app.server import app
-from controllers import future_controller
+from controllers import future_controller, socket_controller
 
 
 @app.post("/placeHedgeOrder")
@@ -77,5 +77,12 @@ def get_future_balance():
 @app.post("/setTpAndSlForOpenedPosition")
 def set_tp_and_sl():
     response = future_controller.set_tp_and_sl(request)
+
+    return response
+
+
+@app.get("/getListenKey")
+def get_listen_key():
+    response = socket_controller.get_listen_key()
 
     return response
