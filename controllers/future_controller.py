@@ -28,6 +28,7 @@ def place_future_order_hedge_mode(request):
                                                  positionSide=position_side,
                                                  quantity=quantity,
                                                  price=price,
+                                                 timeInForce='GTC',
                                                  type=order_type)
         elif order_type == "MARKET":
             symbol = request.form['symbol']

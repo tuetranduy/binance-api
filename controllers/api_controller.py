@@ -2,9 +2,11 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from app.database import Database
 from app.server import app
+from core import ClientManager
 from models.keys import Keys
 
 db = Database()
+client_mgr = ClientManager()
 
 
 def set_keys(request):
@@ -17,6 +19,8 @@ def set_keys(request):
 
         keys = Keys(api_key, secret_key)
         db.set_keys(keys)
+
+        client_mgr.init_client()
 
         return {
             'data': "Keys saved successfully"

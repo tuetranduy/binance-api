@@ -141,4 +141,4 @@ cython_debug/
 # env file
 #*.env
 
-database
+*.db
