@@ -3,5 +3,3 @@ from app.server import app
 
 if __name__ == "__main__":
     app.run()
-    database = Database()
-    database.create_database()
