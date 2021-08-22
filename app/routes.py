@@ -1,7 +1,7 @@
 from flask import request
 
 from app.server import app
-from controllers import future_controller, socket_controller
+from controllers import future_controller, socket_controller, api_controller
 
 
 @app.post("/placeHedgeOrder")
@@ -84,5 +84,19 @@ def set_tp_and_sl():
 @app.get("/getListenKey")
 def get_listen_key():
     response = socket_controller.get_listen_key()
+
+    return response
+
+
+@app.post("/setKeys")
+def set_keys():
+    response = api_controller.set_keys(request)
+
+    return response
+
+
+@app.get("/getKeys")
+def get_keys():
+    response = api_controller.get_keys()
 
     return response
