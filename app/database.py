@@ -7,7 +7,7 @@ from models.keys import Keys
 
 
 class Database:
-    def __init__(self, uri="sqlite:////database/data.db"):
+    def __init__(self, uri="sqlite:///database/data.db"):
         self.engine = create_engine(uri)
         self.SessionMaker = sessionmaker(bind=self.engine)
 
