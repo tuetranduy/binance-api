@@ -20,6 +20,8 @@ def set_keys(request):
         keys = Keys(api_key, secret_key)
         db.set_keys(keys)
 
+        # Re-initialize to make sure client object always use latest api&secret key
+        app.logger.debug('=== Re-initialize client object ===')
         client_mgr.init_client()
 
         return {
@@ -36,9 +38,7 @@ def set_keys(request):
 
 def get_keys():
     try:
-
         keys = db.get_keys()
-
         return {
             'data': {
                 'api_key': keys.api_key,

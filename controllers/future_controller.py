@@ -12,7 +12,7 @@ def place_future_order_hedge_mode(request):
     order_type = request.form['orderType']
     result = {
         'code': 400,
-        'message': 'Invalid order_type'
+        'msg': 'Invalid order_type'
     }
 
     try:
@@ -62,7 +62,7 @@ def place_future_order_hedge_mode(request):
 
     except BinanceAPIException as e:
         return {
-                   'message': e.message,
+                   'msg': e.message,
                    'code': e.status_code
                }, e.status_code
 
@@ -77,7 +77,7 @@ def get_position_by_symbol(symbol):
 
     except BinanceAPIException as e:
         return {
-                   'message': e.message,
+                   'msg': e.message,
                    'code': e.status_code
                }, e.status_code
 
@@ -97,7 +97,7 @@ def cancel_order(request):
 
     except BinanceAPIException as e:
         return {
-                   'message': e.message,
+                   'msg': e.message,
                    'code': e.status_code
                }, e.status_code
 
@@ -115,7 +115,7 @@ def cancel_orders_by_symbol(request):
 
     except BinanceAPIException as e:
         return {
-                   'message': e.message,
+                   'msg': e.message,
                    'code': e.status_code
                }, e.status_code
 
@@ -135,7 +135,7 @@ def cancel_multiple_orders(request):
 
     except BinanceAPIException as e:
         return {
-                   'message': e.message,
+                   'msg': e.message,
                    'code': e.status_code
                }, e.status_code
 
@@ -158,7 +158,7 @@ def close_position_for_normal_order(request):
 
     except BinanceAPIException as e:
         return {
-                   'message': e.message,
+                   'msg': e.message,
                    'code': e.status_code
                }, e.status_code
 
@@ -183,7 +183,7 @@ def close_position_for_hedge_order(request):
 
     except BinanceAPIException as e:
         return {
-                   'message': e.message,
+                   'msg': e.message,
                    'code': e.status_code
                }, e.status_code
 
@@ -216,7 +216,7 @@ def batch_close_position_for_normal_order(request):
 
     except BinanceAPIException as e:
         return {
-                   'message': e.message,
+                   'msg': e.message,
                    'code': e.status_code
                }, e.status_code
 
@@ -236,7 +236,7 @@ def get_order(request):
 
     except BinanceAPIException as e:
         return {
-                   'message': e.message,
+                   'msg': e.message,
                    'code': e.status_code
                }, e.status_code
 
@@ -251,7 +251,7 @@ def get_balance():
 
     except BinanceAPIException as e:
         return {
-                   'message': e.message,
+                   'msg': e.message,
                    'code': e.status_code
                }, e.status_code
 
@@ -277,6 +277,6 @@ def set_tp_and_sl(request):
 
     except BinanceAPIException as e:
         return {
-                   'message': e.message,
+                   'msg': e.message,
                    'code': e.status_code
                }, e.status_code

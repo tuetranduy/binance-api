@@ -28,6 +28,6 @@ def get_listen_key():
         }
     except BinanceAPIException as e:
         return {
-                   'message': e.message,
+                   'msg': e.message,
                    'code': e.status_code
                }, e.status_code
