@@ -281,15 +281,12 @@ def get_balance():
 
 
 def set_tp_and_sl(request):
-    app.logger.debug('set_tp_and_sl_Requested payload: %s', request.form)
-
     symbol = request.form['symbol']
     side = request.form['side']
     position_side = request.form['positionSide']
     quantity = request.form['quantity']
     order_type = request.form['orderType']
     stop_price = request.form['stopPrice']
-    price = request.form['price']
 
     response = {
         'code': 400,
@@ -299,12 +296,15 @@ def set_tp_and_sl(request):
     try:
         if order_type == "TAKE_PROFIT_MARKET" or order_type == "STOP_MARKET":
             app.logger.debug('set_tp_and_sl: TAKE_PROFIT_MARKET')
+            app.logger.debug('set_tp_and_sl_Requested payload: %s', request.form)
             response = client.futures_create_order(symbol=symbol, side=side, positionSide=position_side,
                                                    quantity=quantity,
                                                    type=order_type, stopPrice=stop_price, closePosition=True)
 
         elif order_type == "TAKE_PROFIT" or order_type == "STOP":
             app.logger.debug('set_tp_and_sl: TAKE_PROFIT')
+            app.logger.debug('set_tp_and_sl_Requested payload: %s', request.form)
+            price = request.form['price']
             response = client.futures_create_order(symbol=symbol, side=side, positionSide=position_side,
                                                    quantity=quantity, price=price,
                                                    type=order_type, stopPrice=stop_price)
