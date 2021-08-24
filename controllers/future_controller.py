@@ -66,7 +66,7 @@ def place_future_order_hedge_mode(request):
         }
 
     except BinanceAPIException as e:
-        app.logger.debug('place_hedge_order_Exception: %s', e.message)
+        app.logger.error('place_hedge_order_Exception: %s', e.message)
         return {
                    'msg': e.message,
                    'code': e.status_code
@@ -82,7 +82,7 @@ def get_position_by_symbol(symbol):
         }
 
     except BinanceAPIException as e:
-        app.logger.debug('get_position_by_symbol_Exception: %s', e.message)
+        app.logger.error('get_position_by_symbol_Exception: %s', e.message)
         return {
                    'msg': e.message,
                    'code': e.status_code
@@ -103,7 +103,7 @@ def cancel_order(request):
         }
 
     except BinanceAPIException as e:
-        app.logger.debug('cancel_order_Exception: %s', e.message)
+        app.logger.error('cancel_order_Exception: %s', e.message)
         return {
                    'msg': e.message,
                    'code': e.status_code
@@ -205,7 +205,7 @@ def close_position_for_hedge_order(request):
         }
 
     except BinanceAPIException as e:
-        app.logger.debug('close_position_for_hedge_order_Exception: %s', e.message)
+        app.logger.error('close_position_for_hedge_order_Exception: %s', e.message)
         return {
                    'msg': e.message,
                    'code': e.status_code
@@ -239,6 +239,7 @@ def batch_close_position_for_normal_order(request):
         }
 
     except BinanceAPIException as e:
+        app.logger.error('batch_close_position_for_normal_order_Exception: %s', e.message)
         return {
                    'msg': e.message,
                    'code': e.status_code
@@ -274,6 +275,7 @@ def get_balance():
         }
 
     except BinanceAPIException as e:
+        app.logger.error('get_balance_Exception: %s', e.message)
         return {
                    'msg': e.message,
                    'code': e.status_code
@@ -314,7 +316,7 @@ def set_tp_and_sl(request):
         }
 
     except BinanceAPIException as e:
-        app.logger.debug('set_tp_and_sl_Exception: %s', e.message)
+        app.logger.error('set_tp_and_sl_Exception: %s', e.message)
         return {
                    'msg': e.message,
                    'code': e.status_code
