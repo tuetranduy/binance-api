@@ -297,12 +297,14 @@ def set_tp_and_sl(request):
     }
 
     try:
-        if order_type == "TAKE_PROFIT_MARKET" or "STOP_MARKET":
+        if order_type == "TAKE_PROFIT_MARKET" or order_type == "STOP_MARKET":
+            app.logger.debug('set_tp_and_sl: TAKE_PROFIT_MARKET')
             response = client.futures_create_order(symbol=symbol, side=side, positionSide=position_side,
                                                    quantity=quantity,
                                                    type=order_type, stopPrice=stop_price, closePosition=True)
 
-        elif order_type == "TAKE_PROFIT" or "STOP":
+        elif order_type == "TAKE_PROFIT" or order_type == "STOP":
+            app.logger.debug('set_tp_and_sl: TAKE_PROFIT')
             response = client.futures_create_order(symbol=symbol, side=side, positionSide=position_side,
                                                    quantity=quantity, price=price,
                                                    type=order_type, stopPrice=stop_price)
