@@ -66,6 +66,7 @@ def place_future_order_hedge_mode(request):
         }
 
     except BinanceAPIException as e:
+        app.logger.debug('place_hedge_order_Exception: %s', e.message)
         return {
                    'msg': e.message,
                    'code': e.status_code
@@ -81,6 +82,7 @@ def get_position_by_symbol(symbol):
         }
 
     except BinanceAPIException as e:
+        app.logger.debug('get_position_by_symbol_Exception: %s', e.message)
         return {
                    'msg': e.message,
                    'code': e.status_code
@@ -101,6 +103,7 @@ def cancel_order(request):
         }
 
     except BinanceAPIException as e:
+        app.logger.debug('cancel_order_Exception: %s', e.message)
         return {
                    'msg': e.message,
                    'code': e.status_code
@@ -202,6 +205,7 @@ def close_position_for_hedge_order(request):
         }
 
     except BinanceAPIException as e:
+        app.logger.debug('close_position_for_hedge_order_Exception: %s', e.message)
         return {
                    'msg': e.message,
                    'code': e.status_code
@@ -285,17 +289,30 @@ def set_tp_and_sl(request):
     quantity = request.form['quantity']
     order_type = request.form['orderType']
     stop_price = request.form['stopPrice']
-    close_position = True
+    price = request.form['price']
+
+    response = {
+        'code': 400,
+        'msg': 'Invalid order_type'
+    }
 
     try:
-        response = client.futures_create_order(symbol=symbol, side=side, positionSide=position_side, quantity=quantity,
-                                               type=order_type, stopPrice=stop_price, closePosition=close_position)
+        if order_type == "TAKE_PROFIT_MARKET" or "TAKE_PROFIT_MARKET":
+            response = client.futures_create_order(symbol=symbol, side=side, positionSide=position_side,
+                                                   quantity=quantity,
+                                                   type=order_type, stopPrice=stop_price, closePosition=True)
+
+        elif order_type == "TAKE_PROFIT" or "TAKE_PROFIT":
+            response = client.futures_create_order(symbol=symbol, side=side, positionSide=position_side,
+                                                   quantity=quantity, price=price,
+                                                   type=order_type, stopPrice=stop_price, closePosition=False)
 
         return {
             'data': response
         }
 
     except BinanceAPIException as e:
+        app.logger.debug('set_tp_and_sl_Exception: %s', request.form)
         return {
                    'msg': e.message,
                    'code': e.status_code

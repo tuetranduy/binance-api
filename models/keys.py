@@ -15,3 +15,9 @@ class Keys(Base):
 
     def info(self):
         return {"api_key": self.api_key, "secret_key": self.secret_key}
+
+    def get_api_key(self):
+        return self.api_key
+
+    def get_secret_key(self):
+        return self.secret_key
