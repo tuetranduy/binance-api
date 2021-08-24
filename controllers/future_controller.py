@@ -152,12 +152,6 @@ def cancel_multiple_orders(request):
         headers=headers
     )
 
-    response = requests.delete(
-        uri + '/fapi/v1/batchOrders',
-        data=payload,
-        headers=headers
-    )
-
     if response.status_code == 200:
         return {
             "data": response.json()
