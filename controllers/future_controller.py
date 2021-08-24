@@ -314,7 +314,7 @@ def set_tp_and_sl(request):
         }
 
     except BinanceAPIException as e:
-        app.logger.debug('set_tp_and_sl_Exception: %s', request.form)
+        app.logger.debug('set_tp_and_sl_Exception: %s', e.message)
         return {
                    'msg': e.message,
                    'code': e.status_code
