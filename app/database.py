@@ -37,8 +37,3 @@ class Database:
             keys = session.query(Keys).order_by(Keys.id.desc()).first()
             session.expunge(keys)
             return keys
-
-
-if __name__ == "__main__":
-    database = Database()
-    database.create_database()

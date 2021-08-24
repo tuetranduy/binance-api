@@ -1,9 +1,14 @@
+import requests
 from binance.exceptions import BinanceAPIException
 
+from app.database import Database
 from app.server import app
+from constants import constants
 from core import ClientManager
+from utils import param_builder
 
 client = ClientManager().init_client()
+db = Database()
 
 
 def place_future_order_hedge_mode(request):
@@ -120,24 +125,45 @@ def cancel_orders_by_symbol(request):
                }, e.status_code
 
 
+# this controller using original binance api due to the fucking lib
 def cancel_multiple_orders(request):
     app.logger.debug('cancel_multiple_orders_Requested payload: %s', request.form)
+
+    keys = db.get_keys()
+
+    keys.api_key = "" if keys.api_key is None else keys.api_key
 
     symbol = request.form['symbol']
     order_id_list = request.form['orderIdList']
 
-    try:
-        result = client.futures_cancel_orders(symbol=symbol, orderIdList=order_id_list)
+    headers = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-MBX-APIKEY': keys.api_key if constants.TEST_MODE is False else constants.API_KEY
+    }
+    query = {'symbol': symbol, 'orderIdList': order_id_list, 'timeInForce': 'GTC'}
 
+    payload = param_builder.create_params_with_signature(query)
+
+    uri = constants.REST_BASE_URL_PROD if constants.TEST_MODE is False else constants.REST_BASE_URL
+
+    response = requests.delete(
+        uri + '/fapi/v1/batchOrders',
+        data=payload,
+        headers=headers
+    )
+
+    response = requests.delete(
+        uri + '/fapi/v1/batchOrders',
+        data=payload,
+        headers=headers
+    )
+
+    if response.status_code == 200:
         return {
-            'data': result
+            "data": response.json()
         }
-
-    except BinanceAPIException as e:
-        return {
-                   'msg': e.message,
-                   'code': e.status_code
-               }, e.status_code
+    else:
+        return response.json(), response.status_code
 
 
 # Close opened position for One-way order with MARKET_PRICE

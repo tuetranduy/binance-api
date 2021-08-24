@@ -15,7 +15,9 @@ class ClientManager(object):
         app.logger.debug("=== Creating database ===")
         db.create_database()
 
-        if constants.TEST_MODE:
+        app.logger.debug('=== Binance API is in TEST MODE? %s ===', constants.TEST_MODE)
+
+        if constants.TEST_MODE is True:
             client = Client(constants.API_KEY, constants.API_SECRET, testnet=True)
             client.OPTIONS_TESTNET_URL = constants.REST_BASE_URL
         else:
