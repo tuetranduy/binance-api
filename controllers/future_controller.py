@@ -305,7 +305,7 @@ def set_tp_and_sl(request):
         elif order_type == "TAKE_PROFIT" or "STOP":
             response = client.futures_create_order(symbol=symbol, side=side, positionSide=position_side,
                                                    quantity=quantity, price=price,
-                                                   type=order_type, stopPrice=stop_price, closePosition=False)
+                                                   type=order_type, stopPrice=stop_price)
 
         return {
             'data': response
