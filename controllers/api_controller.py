@@ -14,13 +14,8 @@ class ApiController(BaseController):
         secret_key = request.form['secret_key']
 
         try:
-
             keys = Keys(api_key, secret_key)
             self.database.set_keys(keys)
-
-            # Re-initialize to make sure client object always use latest api&secret key
-            app.logger.debug('=== Re-initialize client object ===')
-            self.re_initialize_client()
 
             return {
                 'data': "Keys saved successfully"
