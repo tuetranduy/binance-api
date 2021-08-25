@@ -1,7 +1,13 @@
 from flask import request
 
 from app.server import app
-from controllers import future_controller, socket_controller, api_controller
+from controllers.api_controller import ApiController
+from controllers.future_controller import FutureController
+from controllers.socket_controller import SocketController
+
+future_controller = FutureController()
+socket_controller = SocketController()
+api_controller = ApiController()
 
 
 @app.post("/placeHedgeOrder")

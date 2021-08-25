@@ -3,31 +3,28 @@ import time
 from binance.exceptions import BinanceAPIException
 
 from app.server import app
-from core import ClientManager
-
-client = ClientManager().init_client()
-
-start_time = 0
-expired_time = 0
-key = ''
+from controllers.base_controller import BaseController
 
 
-def get_listen_key():
-    try:
-        result = client.futures_stream_get_listen_key()
+class SocketController(BaseController):
+    start_time = 0
+    expired_time = 0
+    key = ''
 
-        global start_time
-        global key
-        key = result
-        start_time = time.time()
+    def get_listen_key(self):
+        try:
+            result = self.client.futures_stream_get_listen_key()
 
-        app.logger.debug(f'Listen key {key} created at timestamp: {start_time}')
+            self.key = result
+            self.start_time = time.time()
 
-        return {
-            'data': result
-        }
-    except BinanceAPIException as e:
-        return {
-                   'msg': e.message,
-                   'code': e.status_code
-               }, e.status_code
+            app.logger.debug(f'Listen key {self.key} created at timestamp: {self.start_time}')
+
+            return {
+                'data': result
+            }
+        except BinanceAPIException as e:
+            return {
+                       'msg': e.message,
+                       'code': e.status_code
+                   }, e.status_code
